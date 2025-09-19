@@ -6,4 +6,4 @@ user:paciente@clinica.com
 senha:paciente123
 
 
-servidor utilizado para para subir o site: Xampp porta localhost:3307
+servidor utilizado para para subir o site: XAMPP porta localhost:3307
