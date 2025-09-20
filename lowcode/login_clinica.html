@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Clínica Omenichenel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f0f4f8;
+      }
+      .gradient-text {
+        background: linear-gradient(to right, #0077b6, #00d1c7);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    </style>
+  </head>
+  <body class="flex items-center justify-center min-h-screen p-4">
+    <!-- Container Principal do Formulário -->
+    <div class="bg-white rounded-3xl shadow-xl max-w-lg w-full p-8 sm:p-12 text-center">
+      <h1 class="text-4xl font-bold mb-2 gradient-text">Acesso ao MediConnect Pro</h1>
+      <p id="form-subtitle" class="text-lg text-gray-500 mb-8">Faça login na sua conta</p>
+
+      <!-- Formulário de Login -->
+      <form id="loginForm" action="login.php" method="POST" class="space-y-6">
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          required
+          class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+        />
+        <input
+          type="password"
+          name="senha"
+          placeholder="Senha"
+          required
+          class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+        />
+        <div class="mt-4 text-sm text-gray-600">
+          Você é um:
+          <select name="role" class="ml-2 px-2 py-1 rounded-md border border-gray-300">
+            <option value="paciente">Paciente</option>
+            <option value="atendente">Atendente</option>
+            <option value="gerente">Gerente</option>
+          </select>
+        </div>
+        <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-2xl transition duration-300 transform hover:scale-105 shadow-lg">
+          Entrar
+        </button>
+      </form>
+
+      <!-- Formulário de Cadastro (oculto por padrão) -->
+      <form id="signupForm" action="signup.php" method="POST" class="space-y-6 hidden">
+        <select
+          id="signupRole"
+          name="role"
+          class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+        >
+          <option value="paciente">Paciente</option>
+          <option value="atendente">Atendente</option>
+          <option value="gerente">Gerente</option>
+        </select>
+        <input type="text" name="name" placeholder="Nome Completo" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors" />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          required
+          class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+        />
+        <input
+          type="password"
+          name="senha"
+          placeholder="Senha"
+          required
+          class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+        />
+
+        <!-- Campos de cadastro específicos para paciente (visíveis por padrão para teste) -->
+        <div id="patientFields" class="space-y-6">
+          <input type="tel" name="telefone" placeholder="Telefone" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors" />
+          <input type="text" name="cpf" placeholder="CPF" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors" />
+          <input type="date" name="data_nascimento" placeholder="Data de Nascimento" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors" />
+          <input type="text" name="endereco" placeholder="Endereço" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors" />
+          <div class="flex space-x-4">
+            <input type="text" name="cidade" placeholder="Cidade" class="w-1/2 px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors" />
+            <input type="text" name="estado" placeholder="Estado" class="w-1/2 px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors" />
+          </div>
+        </div>
+        <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-2xl transition duration-300 transform hover:scale-105 shadow-lg">
+          Cadastrar
+        </button>
+      </form>
+
+      <div class="mt-4 text-sm text-gray-600">
+        <span id="toggleText">Ainda não tem uma conta?</span>
+        <button id="toggleFormBtn" class="text-blue-500 hover:underline font-medium" type="button">
+          Cadastre-se
+        </button>
+      </div>
+    </div>
+
+    <script>
+      const loginForm = document.getElementById("loginForm");
+      const signupForm = document.getElementById("signupForm");
+      const toggleFormBtn = document.getElementById("toggleFormBtn");
+      const toggleText = document.getElementById("toggleText");
+      const formSubtitle = document.getElementById("form-subtitle");
+      const signupRole = document.getElementById("signupRole");
+      const patientFields = document.getElementById("patientFields");
+
+      toggleFormBtn.addEventListener("click", () => {
+        if (loginForm.classList.contains("hidden")) {
+          loginForm.classList.remove("hidden");
+          signupForm.classList.add("hidden");
+          toggleText.textContent = "Ainda não tem uma conta?";
+          toggleFormBtn.textContent = "Cadastre-se";
+          formSubtitle.textContent = "Faça login na sua conta";
+        } else {
+          loginForm.classList.add("hidden");
+          signupForm.classList.remove("hidden");
+          toggleText.textContent = "Já tem uma conta?";
+          toggleFormBtn.textContent = "Login";
+          formSubtitle.textContent = "Cadastre-se na plataforma";
+        }
+      });
+
+      signupRole.addEventListener("change", () => {
+        if (signupRole.value === "paciente") {
+          patientFields.classList.remove("hidden");
+        } else {
+          patientFields.classList.add("hidden");
+        }
+      });
+    </script>
+  </body>
+</html>
