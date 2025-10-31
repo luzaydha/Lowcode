@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -224,7 +225,7 @@
                 currentTime.setHours(8, 0, 0, 0); // Começa às 8:00
 
                 const endTime = new Date(date.getTime());
-                endTime.setHours(16, 30, 0, 0); // Último horário é 16:30
+                endTime.setHours(17, 30, 0, 0); // Alterado: Último horário é 17:30
 
                 while (currentTime <= endTime) {
                     const hour = currentTime.getHours();
@@ -235,13 +236,13 @@
                     currentTime.setMinutes(currentTime.getMinutes() + 30);
                 }
 
-                // Simula que alguns horários já foram ocupados, removendo alguns aleatoriamente.
-                const seed = date.getDate();
-                const availableSlots = allTimes.filter((_, index) => {
-                    return (Math.sin(seed * index) * 10000) % 1 > 0.3;
-                });
+                // Alterado: Remove a simulação de horários ocupados para mostrar todos "sem exceção"
+                // const seed = date.getDate();
+                // const availableSlots = allTimes.filter((_, index) => {
+                //     return (Math.sin(seed * index) * 10000) % 1 > 0.3;
+                // });
                 
-                return availableSlots;
+                return allTimes; // Retorna todos os horários calculados
             }
 
 
@@ -572,4 +573,3 @@
 
 </body>
 </html>
-
