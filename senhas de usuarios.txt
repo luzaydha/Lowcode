@@ -1,0 +1,6 @@
+user: atendente@clinica.com
+senha:atendente123
+user:gerente@clinica.com
+senha:gerente123
+user:paciente@clinica.com			
+senha:paciente123

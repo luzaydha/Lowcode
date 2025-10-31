@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MediConnect Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      .metric-card {
+        @apply bg-white p-5 rounded-xl shadow-md;
+      }
+      .channel-card {
+        @apply bg-white p-6 pl-10 rounded-xl shadow-md border border-gray-100 flex items-center gap-4 cursor-pointer hover:shadow-lg transition-all relative;
+      }
+      .badge-active {
+        @apply bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded-md select-none;
+      }
+      .badge-pending {
+        @apply bg-orange-500 text-white text-xs font-semibold px-2 py-1 rounded-md select-none;
+      }
+      .status-dot {
+        @apply w-2 h-2 rounded-full;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100">
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between shadow-sm">
+      <div class="flex items-center space-x-4">
+        <h1 class="font-semibold text-2xl bg-gradient-to-r from-sky-600 to-teal-500 text-transparent bg-clip-text">MediConnect Pro</h1>
+      </div>
+      <nav class="flex items-center space-x-6 text-sm text-gray-500">
+        <div class="flex items-center space-x-2">
+          <span id="online-agents-count" class="bg-green-200 text-green-800 text-xs font-semibold px-2 py-0.5 rounded-full select-none">4 atendentes online</span>
+        </div>
+        <button aria-label="Configurações" class="text-gray-600 hover:text-gray-900"><i class="fas fa-gear fa-xl"></i></button>
+        <button aria-label="Perfil" class="text-gray-600 hover:text-gray-900"><i class="fas fa-user-circle fa-xl"></i></button>
+      </nav>
+    </header>
+
+    <main class="max-w-7xl mx-auto p-6 space-y-8">
+      <!-- Welcome/Hero Section -->
+      <section class="rounded-2xl bg-gradient-to-r from-sky-600 to-teal-500 p-8 text-white shadow-md">
+        <h2 class="font-extrabold text-3xl leading-tight mb-2">Bem-vindo ao MediConnect Pro</h2>
+        <p class="font-light text-lg max-w-2xl mb-6">
+          Centralize todos os canais de atendimento da sua clínica em uma única plataforma
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <button class="flex items-center gap-2 bg-transparent border border-white hover:bg-white hover:text-sky-600 transition-colors px-6 py-3 rounded-xl font-semibold text-white shadow-md">
+            <i class="fas fa-chart-line"></i>
+            Ver Relatórios
+          </button>
+        </div>
+      </section>
+
+      <!-- Real-time Metrics Section -->
+      <section id="metrics-section">
+        <h3 class="text-gray-800 font-semibold text-lg mb-4">Métricas em Tempo Real</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="metric-card">
+            <div class="flex justify-between items-center">
+              <span class="text-gray-500 text-sm">Tempo Médio de Resposta</span>
+              <i class="fas fa-clock text-sky-500 text-xl"></i>
+            </div>
+            <div class="mt-2">
+              <h4 class="text-3xl font-bold text-gray-800" id="avg-response-time">2.4 min</h4>
+              <p class="text-xs text-red-500 mt-1">-15% vs. semana passada</p>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="flex justify-between items-center">
+              <span class="text-gray-500 text-sm">Pacientes Atendidos</span>
+              <i class="fas fa-user text-teal-500 text-xl"></i>
+            </div>
+            <div class="mt-2">
+              <h4 class="text-3xl font-bold text-gray-800" id="resolved-tickets">580</h4>
+              <p class="text-xs text-green-500 mt-1">+12% vs. ontem</p>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="flex justify-between items-center">
+              <span class="text-gray-500 text-sm">Taxa de Conversão</span>
+              <i class="fas fa-check-circle text-purple-500 text-xl"></i>
+            </div>
+            <div class="mt-2">
+              <h4 class="text-3xl font-bold text-gray-800" id="conversion-rate">78.5%</h4>
+              <p class="text-xs text-green-500 mt-1">+4% vs. mês passado</p>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="flex justify-between items-center">
+              <span class="text-gray-500 text-sm">Consultas Agendadas</span>
+              <i class="fas fa-calendar-alt text-orange-500 text-xl"></i>
+            </div>
+            <div class="mt-2">
+              <h4 class="text-3xl font-bold text-gray-800" id="scheduled-appointments">142</h4>
+              <p class="text-xs text-green-500 mt-1">+23% hoje</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Channels Section -->
+      <section>
+        <h3 class="text-gray-800 font-semibold text-lg mb-4">Canais de Atendimento</h3>
+        <div class="grid grid-cols-1 sm-grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          <div class="channel-card bg-green-50">
+            <i class="fab fa-whatsapp-square fa-2x text-green-600"></i>
+            <div class="flex-grow">
+              <div>
+                <span class="font-medium text-sm">WhatsApp Business</span>
+              </div>
+              <span class="font-bold text-2xl text-green-800" id="whatsapp-count">245</span>
+              <p class="text-xs text-gray-500">Mensagens hoje</p>
+            </div>
+          </div>
+          <div class="channel-card bg-fuchsia-50">
+            <i class="fab fa-instagram-square fa-2x text-fuchsia-600"></i>
+            <div class="flex-grow">
+              <div>
+                <span class="font-medium text-sm">Instagram Direct</span>
+              </div>
+              <span class="font-bold text-2xl text-fuchsia-800" id="instagram-count">89</span>
+              <p class="text-xs text-gray-500">Mensagens hoje</p>
+            </div>
+          </div>
+          <div class="channel-card bg-sky-50">
+            <i class="fab fa-facebook-square fa-2x text-sky-600"></i>
+            <div class="flex-grow">
+              <div>
+                <span class="font-medium text-sm">Facebook Messenger</span>
+              </div>
+              <span class="font-bold text-2xl text-sky-800" id="messenger-count">156</span>
+              <p class="text-xs text-gray-500">Mensagens hoje</p>
+            </div>
+          </div>
+          <div class="channel-card bg-amber-50">
+            <i class="fas fa-envelope fa-2x text-amber-600"></i>
+            <div class="flex-grow">
+              <div>
+                <span class="font-medium text-sm">E-mail</span>
+              </div>
+              <span class="font-bold text-2xl text-amber-800" id="email-count">67</span>
+              <p class="text-xs text-gray-500">Mensagens hoje</p>
+            </div>
+          </div>
+          <div class="channel-card bg-teal-50">
+            <i class="fas fa-phone-square-alt fa-2x text-teal-600"></i>
+            <div class="flex-grow">
+              <div>
+                <span class="font-medium text-sm">Telefone</span>
+              </div>
+              <span class="font-bold text-2xl text-teal-800" id="phone-count">23</span>
+              <p class="text-xs text-gray-500">Mensagens hoje</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Recent Tickets and Online Team Section -->
+      <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Recent Tickets -->
+        <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100 flex flex-col">
+          <h3 class="font-semibold text-lg mb-4">Atendimentos Recentes</h3>
+          <ul class="space-y-4 flex-grow" id="recent-tickets">
+            <!-- Items populated by JS -->
+          </ul>
+          <div class="mt-auto pt-4">
+            <a href="#" class="block text-center py-3 px-4 rounded-xl bg-gradient-to-r from-sky-600 to-teal-500 text-white font-semibold hover:shadow-lg transition-shadow">Ver todos os atendimentos</a>
+          </div>
+        </div>
+        <!-- Online Team -->
+        <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100 flex flex-col">
+          <h3 class="font-semibold text-lg mb-4">Equipe Online</h3>
+          <ul class="space-y-4 flex-grow" id="online-team">
+            <!-- Items populated by JS -->
+          </ul>
+          <div class="mt-auto pt-4">
+            <a href="#" class="block text-center py-3 px-4 rounded-xl bg-gradient-to-r from-sky-600 to-teal-500 text-white font-semibold hover:shadow-lg transition-shadow">Gerenciar equipe</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      // Simulate dashboard data
+      const dashboardData = {
+        onlineAgents: 4,
+        metrics: {
+          avgResponseTime: "2.4 min",
+          resolvedTickets: 580,
+          conversionRate: "78.5%",
+          scheduledAppointments: 142,
+        },
+        channels: {
+          whatsapp: 245,
+          instagram: 89,
+          messenger: 156,
+          email: 67,
+          phone: 23,
+        },
+        recentTickets: [
+          { name: "Maria Silva", channel: "WhatsApp", time: "há 2 min", status: "Em andamento" },
+          { name: "João Santos", channel: "Instagram", time: "há 5 min", status: "Aguardando" },
+          { name: "Ana Paula", channel: "Facebook", time: "há 10 min", status: "Em andamento" },
+        ],
+        onlineTeam: [
+          { name: "Marcos Reis", role: "Atendente", initials: "MR", status: "active" },
+          { name: "Beatriz Nogueira", role: "Atendente", initials: "BN", status: "pending" },
+          { name: "Fernanda Dias", role: "Atendente", initials: "FD", status: "pending" },
+          { name: "Lucas Mello", role: "Atendente", initials: "LM", status: "inactive" },
+        ],
+      };
+
+      function renderDashboard() {
+        // Render online agents count
+        document.getElementById("online-agents-count").textContent = `${dashboardData.onlineAgents} atendentes online`;
+
+        // Render metrics
+        document.getElementById("avg-response-time").textContent = dashboardData.metrics.avgResponseTime;
+        document.getElementById("resolved-tickets").textContent = dashboardData.metrics.resolvedTickets;
+        document.getElementById("conversion-rate").textContent = dashboardData.metrics.conversionRate;
+        document.getElementById("scheduled-appointments").textContent = dashboardData.metrics.scheduledAppointments;
+
+        // Render channel counts
+        document.getElementById("whatsapp-count").textContent = dashboardData.channels.whatsapp;
+        document.getElementById("instagram-count").textContent = dashboardData.channels.instagram;
+        document.getElementById("messenger-count").textContent = dashboardData.channels.messenger;
+        document.getElementById("email-count").textContent = dashboardData.channels.email;
+        document.getElementById("phone-count").textContent = dashboardData.channels.phone;
+
+        // Render recent tickets
+        const recentTicketsList = document.getElementById("recent-tickets");
+        recentTicketsList.innerHTML = "";
+        dashboardData.recentTickets.forEach(ticket => {
+          const statusClass = ticket.status === "Em andamento" ? "bg-green-100 text-green-800" : "bg-orange-100 text-orange-800";
+          const li = document.createElement("li");
+          li.classList.add("bg-white", "p-4", "rounded-xl", "border", "flex", "justify-between", "items-center", "shadow-sm");
+          li.innerHTML = `
+            <div>
+              <p class="font-medium text-gray-800">${ticket.name}</p>
+              <p class="text-xs text-gray-500">${ticket.channel} · ${ticket.time}</p>
+            </div>
+            <span class="px-2 py-1 rounded-full text-xs font-semibold ${statusClass}">${ticket.status}</span>
+          `;
+          recentTicketsList.appendChild(li);
+        });
+
+        // Render online team
+        const onlineTeamList = document.getElementById("online-team");
+        onlineTeamList.innerHTML = "";
+        dashboardData.onlineTeam.forEach(member => {
+          const statusColor = member.status === "active" ? "bg-green-500" : member.status === "pending" ? "bg-orange-400" : "bg-gray-400";
+          const li = document.createElement("li");
+          li.classList.add("flex", "items-center", "gap-4");
+          li.innerHTML = `
+            <div class="relative w-10 h-10 flex items-center justify-center bg-gray-200 text-gray-700 font-semibold rounded-full">
+              ${member.initials}
+              <span class="status-dot absolute bottom-0 right-0 transform translate-x-1/4 translate-y-1/4 ${statusColor}"></span>
+            </div>
+            <div>
+              <p class="font-medium">${member.name}</p>
+              <p class="text-sm text-gray-500">${member.role}</p>
+            </div>
+          `;
+          onlineTeamList.appendChild(li);
+        });
+      }
+
+      window.onload = renderDashboard;
+    </script>
+  </body>
+</html>
+
+
+
+
+
+

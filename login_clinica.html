@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clínica Saúde & Bem-Estar</title>
+    <!-- Carregamento do Tailwind CSS para estilos modernos e responsivos -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Cores Personalizadas (Azul e Verde) */
+        :root {
+            --color-primary: #1E3A8A; /* Azul Escuro Institucional */
+            --color-secondary: #059669; /* Verde (Saúde e Bem-Estar) */
+            --color-accent: #BFDBFE; /* Azul Claro para Destaque */
+        }
+        .bg-primary { background-color: var(--color-primary); }
+        .text-primary { color: var(--color-primary); }
+        .bg-secondary { background-color: var(--color-secondary); }
+        .text-secondary { color: var(--color-secondary); }
+
+        /* Estilos do Carrossel (Visuais de Imagens de Médicos) */
+        .hero-carousel {
+            background-image: linear-gradient(rgba(30, 58, 138, 0.8), rgba(5, 150, 105, 0.7)), url('https://placehold.co/1200x500/1E3A8A/ffffff?text=Imagens+de+Medicos');
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        /* Efeito de hover no card de perfil */
+        .perfil-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        .perfil-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased bg-gray-50">
+
+    <!-- CABEÇALHO / NAVBAR -->
+    <header class="bg-primary text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <!-- LOGO -->
+            <h1 class="text-3xl font-bold">
+                Clínica <span class="text-secondary">Saúde</span>
+            </h1>
+            
+            <!-- LINKS DE NAVEGAÇÃO -->
+            <nav class="space-x-4 flex items-center">
+                <a href="#sobre" class="hover:text-gray-200 transition duration-150 hidden md:inline">Sobre Nós</a>
+                <!-- Cadastre-se e Enter (Botões de Ação) -->
+                <a href="paciente/index.html" class="bg-secondary px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition duration-150">
+                    Cadastre-se
+                </a>
+                <a href="#" class="bg-white text-primary px-4 py-2 rounded-lg font-semibold border border-white hover:bg-gray-100 transition duration-150">
+                    Enter
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- SEÇÃO PRINCIPAL (HERO) - SIMULANDO IMAGENS DE MÉDICOS -->
+    <section class="hero-carousel shadow-xl">
+        <div class="p-6 md:p-12 max-w-2xl bg-white bg-opacity-90 rounded-xl shadow-2xl">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-primary mb-3">
+                Seu Bem-Estar, Nossa Prioridade.
+            </h2>
+            <p class="text-gray-700 text-lg mb-6">
+                Tecnologia e Humanização no cuidado com a sua saúde.
+            </p>
+            <button class="bg-secondary text-white px-8 py-3 rounded-full font-bold text-lg hover:bg-green-700 transition duration-300">
+                Agende sua Consulta
+            </button>
+        </div>
+    </section>
+
+    <!-- SEÇÃO DE PERFIS (Paciente, Atendente, Gerente) -->
+    <section id="perfis" class="container mx-auto px-4 py-16">
+        <h3 class="text-3xl font-bold text-center text-primary mb-12">Áreas de Acesso</h3>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+            
+            <!-- CARD 1: PACIENTE -->
+            <div class="perfil-card bg-white p-6 rounded-xl border border-gray-200 shadow-md">
+                <i class="fas fa-user-injured text-secondary text-5xl mb-4"></i>
+                <h4 class="text-2xl font-semibold text-primary mb-2">Paciente</h4>
+                <p class="text-gray-600 mb-4">
+                    Gerencie seus agendamentos, exames e histórico médico.
+                </p>
+                <a href="paciente/index.html" class="text-secondary font-bold hover:underline">
+                    Acessar Área <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                </a>
+            </div>
+
+            <!-- CARD 2: ATENDENTE -->
+            <div class="perfil-card bg-white p-6 rounded-xl border border-gray-200 shadow-md">
+                <i class="fas fa-headset text-secondary text-5xl mb-4"></i>
+                <h4 class="text-2xl font-semibold text-primary mb-2">Atendente</h4>
+                <p class="text-gray-600 mb-4">
+                    Otimize o fluxo de pacientes e a gestão de horários.
+                </p>
+                <a href="atendente.html" class="text-secondary font-bold hover:underline">
+                    Acessar Sistema <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                </a>
+            </div>
+
+            <!-- CARD 3: GERENTE -->
+            <div class="perfil-card bg-white p-6 rounded-xl border border-gray-200 shadow-md">
+                <i class="fas fa-chart-line text-secondary text-5xl mb-4"></i>
+                <h4 class="text-2xl font-semibold text-primary mb-2">Gerente</h4>
+                <p class="text-gray-600 mb-4">
+                    Visualize relatórios e indicadores de desempenho da clínica.
+                </p>
+                <a href="gerente.html" class="text-secondary font-bold hover:underline">
+                    Acessar Painel <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO SOBRE NÓS (Placeholder) -->
+    <section id="sobre" class="bg-accent py-16">
+        <div class="container mx-auto px-4">
+            <h3 class="text-3xl font-bold text-primary mb-4">Sobre a Clínica</h3>
+            <p class="text-lg text-primary max-w-4xl">
+                Somos dedicados a oferecer um atendimento humanizado e de excelência. Nossa equipe é formada por profissionais qualificados, prontos para cuidar de você e sua família com a mais alta tecnologia e empatia. Utilizamos as cores azul e verde para refletir confiança, calma e o foco na saúde e natureza.
+            </p>
+        </div>
+    </section>
+
+    <!-- RODAPÉ -->
+    <footer class="bg-gray-800 text-white p-8 text-center">
+        <p>&copy; 2024 Clínica Saúde & Bem-Estar. Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- JAVASCRIPT BÁSICO (Para futuras interações, se precisar de um carrossel ou modals) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("Página da clínica carregada com sucesso!");
+
+            // Exemplo de como você usaria JavaScript para adicionar funcionalidade
+            // aos botões, como abrir um modal de login ou iniciar um carrossel.
+            
+            const cards = document.querySelectorAll('.perfil-card');
+            cards.forEach(card => {
+                card.addEventListener('click', () => {
+                    // Adicione aqui a lógica de navegação para a área específica
+                    const perfil = card.querySelector('h4').textContent;
+                    console.log(`Clicado no perfil: ${perfil}`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
