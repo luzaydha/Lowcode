@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale-1.0">
+    <title>Cadastro - Clínica MediConnectPro</title>
+    <!-- Incluindo Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Incluindo a biblioteca Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Mesmo fundo da tela de login */
+        }
+        /* Estilos do formulário de login para consistência */
+        .gradient-text {
+            background: linear-gradient(to right, #0077b6, #00d1c7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        /* Classe de erro para os inputs */
+        .input-error {
+            border-color: #ef4444; /* red-500 */
+        }
+        .input-error:focus {
+            border-color: #ef4444; /* red-500 */
+            ring-color: #ef4444; /* red-500 */
+        }
+        /* Placeholder para mensagens de erro */
+        .error-message {
+            height: 1rem; 
+        }
+        /* Estilo dos inputs para combinar com a tela de login */
+        .form-input {
+            width: 100%;
+            padding-left: 1rem; /* px-4 */
+            padding-right: 1rem; /* px-4 */
+            /* Ajuste no padding-right para dar espaço ao ícone de olho */
+            padding-right: 2.5rem; /* pr-10 */
+            padding-top: 0.75rem; /* py-3 */
+            padding-bottom: 0.75rem; /* py-3 */
+            border-radius: 0.75rem; /* rounded-xl */
+            border-width: 1px;
+            border-color: #D1D5DB; /* border-gray-300 */
+            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, box-shadow;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
+        }
+        .form-input:focus {
+            outline: 2px solid transparent;
+            outline-offset: 2px;
+            --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+            --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+            box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+            --tw-ring-color: #3B82F6; /* focus:ring-blue-500 */
+        }
+        /* Input de data não precisa de padding-right extra */
+        input[type="date"].form-input {
+            padding-right: 1rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+
+    <!-- Container principal (estilo da tela de login) -->
+    <div class="w-full max-w-2xl mx-auto bg-white rounded-3xl shadow-xl p-6 sm:p-10">
+        
+        <h1 class="text-4xl font-bold mb-2 gradient-text text-center">
+            Crie sua Conta
+        </h1>
+        <p class="text-lg text-gray-500 mb-8 text-center">Preencha os campos para se registrar</p>
+
+        <!-- Mensagem de Sucesso (oculta por padrão) -->
+        <div id="success-message" class="hidden bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-6" role="alert">
+            <strong class="font-bold">Sucesso!</strong>
+            <span class="block sm:inline">Paciente cadastrado com sucesso. Redirecionando para o login...</span>
+        </div>
+
+        <!-- Formulário com novalidate para usarmos nossa própria validação JS -->
+        <form id="patientForm" novalidate>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                
+                <!-- Nome Completo -->
+                <div class="md:col-span-2">
+                    <label for="nome" class="block text-sm font-medium text-gray-700 mb-1">Nome Completo</label>
+                    <!-- Input de nome não precisa de espaço para ícone -->
+                    <input type="text" id="nome" name="nome" class="form-input" style="padding-right: 1rem;" required>
+                    <p id="error-nome" class="text-xs text-red-600 error-message"></p>
+                </div>
+
+                <!-- Data de Nascimento -->
+                <div>
+                    <label for="dataNascimento" class="block text-sm font-medium text-gray-700 mb-1">Data de Nascimento</label>
+                    <input type="date" id="dataNascimento" name="dataNascimento" class="form-input" required>
+                    <p id="error-dataNascimento" class="text-xs text-red-600 error-message"></p>
+                </div>
+
+                <!-- CPF -->
+                <div>
+                    <label for="cpf" class="block text-sm font-medium text-gray-700 mb-1">CPF</label>
+                    <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" maxlength="14" class="form-input" style="padding-right: 1rem;" required>
+                    <p id="error-cpf" class="text-xs text-red-600 error-message"></p>
+                </div>
+
+                <!-- Email -->
+                <div class="md:col-span-2">
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="email" id="email" name="email" placeholder="maria@email.com" class="form-input" style="padding-right: 1rem;" required>
+                    <p id="error-email" class="text-xs text-red-600 error-message"></p>
+                </div>
+
+                <!-- Telefone -->
+                <div class="md:col-span-2">
+                    <label for="telefone" class="block text-sm font-medium text-gray-700 mb-1">Telefone / Celular</label>
+                    <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" maxlength="15" class="form-input" style="padding-right: 1rem;" required>
+                    <p id="error-telefone" class="text-xs text-red-600 error-message"></p>
+                </div>
+
+                <!-- [NOVO] Senha -->
+                <div class="md:col-span-2 relative">
+                    <label for="senha" class="block text-sm font-medium text-gray-700 mb-1">Senha</label>
+                    <input type="password" id="senha" name="senha" class="form-input" required>
+                    <button type="button" id="toggleSenha" class="absolute inset-y-0 right-0 pr-3 flex items-center" style="top: 2rem;">
+                        <i data-lucide="eye" class="w-5 h-5 text-gray-400"></i>
+                    </button>
+                    <p id="error-senha" class="text-xs text-red-600 error-message"></p>
+                </div>
+
+                <!-- [NOVO] Confirmar Senha -->
+                <div class="md:col-span-2 relative">
+                    <label for="confirmaSenha" class="block text-sm font-medium text-gray-700 mb-1">Confirmar Senha</label>
+                    <input type="password" id="confirmaSenha" name="confirmaSenha" class="form-input" required>
+                    <button type="button" id="toggleConfirmaSenha" class="absolute inset-y-0 right-0 pr-3 flex items-center" style="top: 2rem;">
+                        <i data-lucide="eye" class="w-5 h-5 text-gray-400"></i>
+                    </button>
+                    <p id="error-confirmaSenha" class="text-xs text-red-600 error-message"></p>
+                </div>
+
+
+                <!-- Termos e Condições -->
+                <div class="md:col-span-2 flex items-center gap-x-3 mt-4">
+                    <input id="termos" name="termos" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" required>
+                    <label for="termos" class="text-sm font-medium text-gray-700">Eu li e aceito os termos de serviço.</label>
+                </div>
+                <div class="md:col-span-2 -mt-3">
+                     <p id="error-termos" class="text-xs text-red-600 error-message"></p>
+                </div>
+
+
+                <!-- Botão de Envio (estilo da tela de login) -->
+                <div class="md:col-span-2 mt-6">
+                    <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-2xl transition duration-300 transform hover:scale-105 shadow-lg">
+                        Cadastrar
+                    </button>
+                </div>
+
+                <!-- [ATUALIZADO] Link para a tela de Login -->
+                <div class="md:col-span-2 mt-6 text-center">
+                    <p class="text-base text-gray-500">
+                        Já tem uma conta?
+                        <!-- Este link aponta de volta para o seu arquivo de login -->
+                        <a href="formulario_paciente.html" class="font-semibold text-blue-500 hover:text-blue-600 transition-colors">
+                            Entrar
+                        </a>
+                    </p>
+                </div>
+
+            </div>
+        </form>
+
+    </div>
+
+    <script>
+        // Inicializa os ícones da biblioteca Lucide
+        lucide.createIcons();
+
+        // Aguarda o carregamento do DOM para executar o script
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- Seleção dos Elementos ---
+            const form = document.getElementById('patientForm');
+            const successMessage = document.getElementById('success-message');
+
+            // Inputs
+            const nomeInput = document.getElementById('nome');
+            const dataNascimentoInput = document.getElementById('dataNascimento');
+            const cpfInput = document.getElementById('cpf');
+            const emailInput = document.getElementById('email');
+            const telefoneInput = document.getElementById('telefone');
+            const termosInput = document.getElementById('termos');
+            // [NOVO] Inputs de Senha
+            const senhaInput = document.getElementById('senha');
+            const confirmaSenhaInput = document.getElementById('confirmaSenha');
+            
+            // Elementos de Erro
+            const errorNome = document.getElementById('error-nome');
+            const errorDataNascimento = document.getElementById('error-dataNascimento');
+            const errorCpf = document.getElementById('error-cpf');
+            const errorEmail = document.getElementById('error-email');
+            const errorTelefone = document.getElementById('error-telefone');
+            const errorTermos = document.getElementById('error-termos');
+            // [NOVO] Erros de Senha
+            const errorSenha = document.getElementById('error-senha');
+            const errorConfirmaSenha = document.getElementById('error-confirmaSenha');
+
+            // [NOVO] Botões de Toggle da Senha
+            const toggleSenha = document.getElementById('toggleSenha');
+            const toggleConfirmaSenha = document.getElementById('toggleConfirmaSenha');
+            
+            // --- Funções Helper (de Ajuda) ---
+            
+            function showError(inputElement, errorElement, message) {
+                inputElement.classList.add('input-error');
+                errorElement.textContent = message;
+            }
+
+            function resetErrors() {
+                successMessage.classList.add('hidden');
+                const fields = [
+                    { input: nomeInput, error: errorNome },
+                    { input: dataNascimentoInput, error: errorDataNascimento },
+                    { input: cpfInput, error: errorCpf },
+                    { input: emailInput, error: errorEmail },
+                    { input: telefoneInput, error: errorTelefone },
+                    { input: termosInput, error: errorTermos },
+                    // [NOVO] Reseta erros de senha
+                    { input: senhaInput, error: errorSenha },
+                    { input: confirmaSenhaInput, error: errorConfirmaSenha }
+                ];
+                fields.forEach(field => {
+                    field.input.classList.remove('input-error');
+                    if (field.error) {
+                        field.error.textContent = '';
+                    }
+                });
+                errorTermos.textContent = '';
+            }
+            
+            // --- Funções de Validação ---
+            
+            function validateNome() {
+                if (nomeInput.value.trim() === '') {
+                    showError(nomeInput, errorNome, 'Nome completo é obrigatório.');
+                    return false;
+                }
+                return true;
+            }
+
+            function validateDataNascimento() {
+                if (dataNascimentoInput.value.trim() === '') {
+                    showError(dataNascimentoInput, errorDataNascimento, 'Data de nascimento é obrigatória.');
+                    return false;
+                }
+                return true;
+            }
+
+            function validateEmail() {
+                const emailValue = emailInput.value.trim();
+                const emailRegex = /^\S+@\S+\.\S+$/;
+                if (emailValue === '') {
+                    showError(emailInput, errorEmail, 'Email é obrigatório.');
+                    return false;
+                } else if (!emailRegex.test(emailValue)) {
+                    showError(emailInput, errorEmail, 'Formato de email inválido.');
+                    return false;
+                }
+                return true;
+            }
+
+            function validateCPF() {
+                const cpfValue = cpfInput.value.trim();
+                const cpfRegex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
+                if (cpfValue === '') {
+                    showError(cpfInput, errorCpf, 'CPF é obrigatório.');
+                    return false;
+                } else if (!cpfRegex.test(cpfValue)) {
+                    showError(cpfInput, errorCpf, 'Formato de CPF inválido. Use 000.000.000-00');
+                    return false;
+                }
+                return true;
+            }
+
+            function validateTelefone() {
+                const telefoneValue = telefoneInput.value.trim();
+                const telefoneRegex = /^\(\d{2}\)\s\d{4,5}-\d{4}$/;
+                if (telefoneValue === '') {
+                    showError(telefoneInput, errorTelefone, 'Telefone é obrigatório.');
+                    return false;
+                } else if (!telefoneRegex.test(telefoneValue)) {
+                    showError(telefoneInput, errorTelefone, 'Formato inválido. Use (00) 00000-0000');
+                    return false;
+                }
+                return true;
+            }
+
+            // [NOVO] Validação de Senha
+            function validateSenha() {
+                const senhaValue = senhaInput.value.trim();
+                if (senhaValue === '') {
+                    showError(senhaInput, errorSenha, 'Senha é obrigatória.');
+                    return false;
+                } else if (senhaValue.length < 6) {
+                    showError(senhaInput, errorSenha, 'A senha deve ter no mínimo 6 caracteres.');
+                    return false;
+                }
+                return true;
+            }
+
+            // [NOVO] Validação de Confirmação de Senha
+            function validateConfirmaSenha() {
+                const confirmaSenhaValue = confirmaSenhaInput.value.trim();
+                if (confirmaSenhaValue === '') {
+                    showError(confirmaSenhaInput, errorConfirmaSenha, 'Confirmação de senha é obrigatória.');
+                    return false;
+                } else if (confirmaSenhaValue !== senhaInput.value.trim()) {
+                    showError(confirmaSenhaInput, errorConfirmaSenha, 'As senhas não coincidem.');
+                    return false;
+                }
+                return true;
+            }
+
+
+            function validateTermos() {
+                if (!termosInput.checked) {
+                    errorTermos.textContent = 'Você deve aceitar os termos.';
+                    return false;
+                }
+                return true;
+            }
+
+            // --- Máscaras de Input (Auto-formatação) ---
+
+            cpfInput.addEventListener('input', (e) => {
+                let value = e.target.value.replace(/\D/g, '');
+                value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+                e.target.value = value.slice(0, 14);
+            });
+
+            telefoneInput.addEventListener('input', (e) => {
+                let value = e.target.value.replace(/\D/g, '');
+                value = value.replace(/^(\d{2})(\d)/, '($1) $2');
+                if (value.length > 10) {
+                    value = value.replace(/(\d{5})(\d{4})$/, '$1-$2');
+                } else {
+                    value = value.replace(/(\d{4})(\d{4})$/, '$1-$2');
+                }
+                e.target.value = value.slice(0, 15);
+            });
+
+            // [NOVO] Lógica para Mostrar/Ocultar Senha
+            function setupPasswordToggle(toggleButton, passwordInput) {
+                toggleButton.addEventListener('click', () => {
+                    // Alterna o tipo do input
+                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passwordInput.setAttribute('type', type);
+                    
+                    // Alterna o ícone
+                    if (type === 'password') {
+                        toggleButton.innerHTML = '<i data-lucide="eye" class="w-5 h-5 text-gray-400"></i>';
+                    } else {
+                        toggleButton.innerHTML = '<i data-lucide="eye-off" class="w-5 h-5 text-gray-400"></i>';
+                    }
+                    // Recria o ícone com a biblioteca Lucide
+                    lucide.createIcons();
+                });
+            }
+
+            setupPasswordToggle(toggleSenha, senhaInput);
+            setupPasswordToggle(toggleConfirmaSenha, confirmaSenhaInput);
+
+
+            // --- Event Listener Principal (Submit) ---
+            
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                resetErrors();
+
+                // Executa as validações
+                const isNomeValid = validateNome();
+                const isDataValid = validateDataNascimento();
+                const isCpfValid = validateCPF();
+                const isEmailValid = validateEmail();
+                const isTelefoneValid = validateTelefone();
+                // [NOVO] Chama validação de senha
+                const isSenhaValid = validateSenha();
+                const isConfirmaSenhaValid = validateConfirmaSenha();
+                const isTermosValid = validateTermos();
+
+                // Verifica se TUDO é válido
+                if (isNomeValid && isDataValid && isCpfValid && isEmailValid && isTelefoneValid && isSenhaValid && isConfirmaSenhaValid && isTermosValid) {
+                    successMessage.classList.remove('hidden');
+                    form.reset();
+                    // Rola a página para o topo para ver a mensagem
+                    window.scrollTo(0, 0);
+
+                    // Simula um redirecionamento para a tela de login após o sucesso
+                    setTimeout(() => {
+                        window.location.href = 'formulario_paciente.html'; // Redireciona para o login
+                    }, 2000); // Espera 2 segundos
+                }
+            });
+        });
+    </script>
+</body>
+</html>

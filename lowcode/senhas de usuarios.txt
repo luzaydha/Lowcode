@@ -1,9 +1,0 @@
-user: atendente@clinica.com
-senha:atendente123
-user:gerente@clinica.com
-senha:gerente123
-user:paciente@clinica.com			
-senha:paciente123
-
-ultilise o progra XAMPP para ultilizar melhor o site.
-servidor utilizado para para subir o site: XAMPP porta localhost:3307
