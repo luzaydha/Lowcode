@@ -4,7 +4,7 @@ session_start();
 require_once 'db.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: login_clinica.html');
+    header('Location: login_atendente_gerente.html');
     exit;
 }
 
@@ -13,7 +13,7 @@ $senha = isset($_POST['senha']) ? trim($_POST['senha']) : '';
 
 if (empty($email) || empty($senha)) {
     $_SESSION['error'] = 'Preencha email e senha.';
-    header('Location: login_clinica.html');
+    header('Location: login_atendente_gerente.html');
     exit;
 }
 
@@ -42,12 +42,12 @@ if ($result && $row = $result->fetch_assoc()) {
         } elseif ($row['role'] === 'gerente') {
             header('Location: gerente.html');
         } else {
-            header('Location: login_clinica.html');
+            header('Location: longui_atendente_gerente.html');
         }
         exit;
     }
 }
 
 $_SESSION['error'] = 'Email ou senha inválidos.';
-header('Location: login_clinica.html');
+header('Location: longui_atendente_gerente.html');
 exit;
