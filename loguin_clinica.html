@@ -10,17 +10,18 @@
         /* Cores Personalizadas (Azul e Verde) */
         :root {
             --color-primary: #1E3A8A; /* Azul Escuro Institucional */
-            --color-secondary: #059669; /* Verde (Saúde e Bem-Estar) */
+            --color-secondary: #00d1c7; /* Ciano */
             --color-accent: #BFDBFE; /* Azul Claro para Destaque */
+            --gradient-secondary: linear-gradient(to right, #0077b6, #00d1c7);
         }
         .bg-primary { background-color: var(--color-primary); }
         .text-primary { color: var(--color-primary); }
-        .bg-secondary { background-color: var(--color-secondary); }
+        .bg-secondary { background: var(--gradient-secondary); }
         .text-secondary { color: var(--color-secondary); }
 
         /* Estilos do Carrossel (Visuais de Imagens de Médicos) */
         .hero-carousel {
-            background-image: linear-gradient(rgba(30, 58, 138, 0.8), rgba(5, 150, 105, 0.7)), url('https://placehold.co/1200x500/1E3A8A/ffffff?text=Imagens+de+Medicos');
+            background-image: url('imagens/medicos.full.jpeg');
             background-size: cover;
             background-position: center;
             height: 400px;
@@ -39,6 +40,14 @@
             transform: translateY(-8px);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
         }
+
+        .btn-gradient-hover {
+            transition: filter 0.3s ease, transform 0.3s ease;
+        }
+        .btn-gradient-hover:hover {
+            filter: brightness(1.15); 
+            transform: scale(1.03); 
+        }
     </style>
 </head>
 <body class="font-sans antialiased bg-gray-50">
@@ -48,17 +57,16 @@
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
             <!-- LOGO -->
             <h1 class="text-3xl font-bold">
-                Clínica <span class="text-secondary">Saúde</span>
+                  MediConnect <span class="text-secondary">Pro</span>
             </h1>
             
             <!-- LINKS DE NAVEGAÇÃO -->
             <nav class="space-x-4 flex items-center">
                 <a href="#sobre" class="hover:text-gray-200 transition duration-150 hidden md:inline">Sobre Nós</a>
-                <!-- Cadastre-se e Enter (Botões de Ação) -->
-                <a href="longui_paciente.html" class="bg-secondary px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition duration-150">
+                <a href="paciente/longui_paciente.html" class="bg-secondary px-4 py-2 rounded-lg font-semibold text-white btn-gradient-hover">
                     Cadastre-se
                 </a>
-                <a href="#" class="bg-white text-primary px-4 py-2 rounded-lg font-semibold border border-white hover:bg-gray-100 transition duration-150">
+                <a href="paciente/longui_paciente.html" class="bg-white text-primary px-4 py-2 rounded-lg font-semibold border border-white hover:bg-gray-100 transition duration-150">
                     Enter
                 </a>
             </nav>
@@ -74,7 +82,7 @@
             <p class="text-gray-700 text-lg mb-6">
                 Tecnologia e Humanização no cuidado com a sua saúde.
             </p>
-            <button class="bg-secondary text-white px-8 py-3 rounded-full font-bold text-lg hover:bg-green-700 transition duration-300">
+            <button class="bg-secondary text-white px-8 py-3 rounded-full font-bold text-lg btn-gradient-hover">
                 Agende sua Consulta
             </button>
         </div>
@@ -88,12 +96,14 @@
             
             <!-- CARD 1: PACIENTE -->
             <div class="perfil-card bg-white p-6 rounded-xl border border-gray-200 shadow-md">
+                <!-- Ícone agora usa a nova cor --color-secondary (ciano) -->
                 <i class="fas fa-user-injured text-secondary text-5xl mb-4"></i>
                 <h4 class="text-2xl font-semibold text-primary mb-2">Paciente</h4>
                 <p class="text-gray-600 mb-4">
                     Gerencie seus agendamentos, exames e histórico médico.
                 </p>
-                <a href="longui_paciente.html" target="_self" rel="external" class="text-secondary font-bold hover:underline">
+                <!-- Link agora usa a nova cor --color-secondary (ciano) -->
+                <a href="paciente/longui_paciente.html" class="text-secondary font-bold hover:underline">
                     Acessar Área <i class="fas fa-arrow-right ml-2 text-sm"></i>
                 </a>
             </div>
@@ -105,7 +115,7 @@
                 <p class="text-gray-600 mb-4">
                     Otimize o fluxo de pacientes e a gestão de horários.
                 </p>
-                <a href="logui_atendente_gerente.html" target="_self" rel="external" class="text-secondary font-bold hover:underline">
+                <a href="logui_atendente_gerente.html" class="text-secondary font-bold hover:underline">
                     Acessar Sistema <i class="fas fa-arrow-right ml-2 text-sm"></i>
                 </a>
             </div>
@@ -117,7 +127,7 @@
                 <p class="text-gray-600 mb-4">
                     Visualize relatórios e indicadores de desempenho da clínica.
                 </p>
-                <a href="logui_atendente_gerente.html" target="_self" rel="external" class="text-secondary font-bold hover:underline">
+                <a href="logui_atendente_gerente.html" class="text-secondary font-bold hover:underline">
                     Acessar Painel <i class="fas fa-arrow-right ml-2 text-sm"></i>
                 </a>
             </div>
@@ -128,7 +138,7 @@
     <section id="sobre" class="bg-accent py-16">
         <div class="container mx-auto px-4">
             <h3 class="text-3xl font-bold text-primary mb-4">Sobre a Clínica</h3>
-            <p class="text-lg text-primary max-w-4xl">
+            <p class="text-lg text-primary max-w-4xl" justify>
                 Somos dedicados a oferecer um atendimento humanizado e de excelência. Nossa equipe é formada por profissionais qualificados, prontos para cuidar de você e sua família com a mais alta tecnologia e empatia. Utilizamos as cores azul e verde para refletir confiança, calma e o foco na saúde e natureza.
             </p>
         </div>
@@ -136,7 +146,7 @@
 
     <!-- RODAPÉ -->
     <footer class="bg-gray-800 text-white p-8 text-center">
-        <p>&copy; 2024 Clínica Saúde & Bem-Estar. Todos os direitos reservados.</p>
+        <p>&copy; 2024 MediConnect Pro. Todos os direitos reservados.</p>
     </footer>
 
     <!-- JAVASCRIPT BÁSICO (Para futuras interações, se precisar de um carrossel ou modals) -->
