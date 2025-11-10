@@ -4,7 +4,7 @@ $host = 'localhost';
 $user = 'root';
 $pass = ''; 
 $dbname = 'clinica';
-$port = 3306; // sua porta do MySQL
+$port = 3307; // sua porta do MySQL
 
 $mysqli = new mysqli($host, $user, $pass, $dbname, $port);
 
