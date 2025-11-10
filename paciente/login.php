@@ -1,13 +1,11 @@
 <?php
-// login.php
 session_start();
+ob_start();
 require_once 'db.php';
 
-// Caminho absoluto para a tela de login principal
-$login_page = '/Lowcode-1/logui_atendente_gerente.html';
+$login_page = 'logui_atendente_gerente.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    // CORRIGIDO: Redireciona para o caminho absoluto
     header('Location: ' . $login_page);
     exit;
 }
@@ -17,12 +15,11 @@ $senha = isset($_POST['senha']) ? trim($_POST['senha']) : '';
 
 if (empty($email) || empty($senha)) {
     $_SESSION['error'] = 'Preencha email e senha.';
-    // CORRIGIDO: Redireciona para o caminho absoluto
     header('Location: ' . $login_page);
     exit;
 }
 
-// busca usuário
+// Buscar usuário
 $sql = "SELECT id, nome, email, senha, role FROM usuarios WHERE email = ? LIMIT 1";
 $stmt = $mysqli->prepare($sql);
 $stmt->bind_param('s', $email);
@@ -30,39 +27,35 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result && $row = $result->fetch_assoc()) {
-    $stored = $row['senha'];
-
-    // Recomendado e seguro:
-    if (password_verify($senha, $stored)) {
-        // login OK
+    if (password_verify($senha, $row['senha'])) {
+        // Login OK
         $_SESSION['user_id'] = $row['id'];
         $_SESSION['user_nome'] = $row['nome'];
         $_SESSION['user_role'] = $row['role'];
 
-        // === CORREÇÃO PRINCIPAL AQUI ===
-        // Redireciona usando caminhos absolutos
-        
-        if ($row['role'] === 'paciente') {
-            // CORRIGIDO: Aponta para o arquivo na RAIZ
-            header('Location: /Lowcode-1/paciente.html');
-            
-        } elseif ($row['role'] === 'atendente') {
-            // CORRIGIDO: Caminho absoluto
-            header('Location: /Lowcode-1/atendente.html');
-            
-        } elseif ($row['role'] === 'gerente') {
-            // CORRIGIDO: Caminho absoluto
-            header('Location: /Lowcode-1/gerente.html');
-            
-        } else {
-            // CORRIGIDO: Caminho absoluto para a página de login
-            header('Location: ' . $login_page);
+        // Redirecionamento por função
+        switch ($row['role']) {
+            case 'paciente':
+                header('Location: /Lowcode-1/paciente/paciente.php');
+                break;
+            case 'atendente':
+                header('Location: /Lowcode-1/atendente.html');
+                break;
+            case 'gerente':
+                header('Location: /Lowcode-1/gerente.html');
+                break;
+            default:
+                $_SESSION['error'] = 'Função de usuário desconhecida.';
+                header('Location: ' . $login_page);
         }
         exit;
+    } else {
+        $_SESSION['error'] = 'Email ou senha inválidos.';
+        header('Location: ' . $login_page);
+        exit;
     }
+} else {
+    $_SESSION['error'] = 'Email ou senha inválidos.';
+    header('Location: ' . $login_page);
+    exit;
 }
-
-// CORRIGIDO: Caminho absoluto para a página de login
-$_SESSION['error'] = 'Email ou senha inválidos.';
-header('Location: ' . $login_page);
-exit;

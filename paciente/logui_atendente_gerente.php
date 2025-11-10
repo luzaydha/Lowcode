@@ -25,7 +25,7 @@
     <p id="form-subtitle" class="text-lg text-gray-500 mb-8">Faça login na sua conta</p>
 
    
-    <form action="paciente/login.php" method="POST" class="space-y-6">
+    <form action="login.php" method="POST" class="space-y-6">
       <input
         type="email"
         name="email"

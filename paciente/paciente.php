@@ -1,6 +1,6 @@
 <?php
 session_start();
-$login_page = '/Lowcode-1/longui_paciente.html';
+$login_page = '/paciente/paciente.php';
 if (!isset($_SESSION['user_id'])) {
    
     header('Location: ' . $login_page);

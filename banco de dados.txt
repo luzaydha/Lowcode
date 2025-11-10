@@ -1,4 +1,3 @@
--- SQL para criar a tabela de usuários
 CREATE TABLE `usuarios` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(255) NOT NULL,
@@ -14,18 +13,9 @@ CREATE TABLE `usuarios` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
--- Insere dados de teste na tabela de usuários
-
--- A senha 'paciente123' hasheada com PASSWORD_DEFAULT
-SET @senha_paciente = '$2y$10$wT3yE4L8b7Sg2W3L5S5wX.X1oJ3D0c9dY0.g8P7E5nN2uX8fV1u';
-
--- A senha 'gerente123' hasheada com PASSWORD_DEFAULT
-SET @senha_gerente = '$2y$10$wT3yE4L8b7Sg2W3L5S5wX.X1oJ3D0c9dY0.g8P7E5nN2uX8fV1u';
-
--- A senha 'atendente123' hasheada com PASSWORD_DEFAULT
-SET @senha_atendente = '$2y$10$wT3yE4L8b7Sg2W3L5S5wX.X1oJ3D0c9dY0.g8P7E5nN2uX8fV1u';
 
 INSERT INTO `usuarios` (`email`, `senha`, `role`, `nome`, `telefone`, `cpf`, `data_nascimento`, `endereco`, `cidade`, `estado`) VALUES
-('paciente@clinica.com', @senha_paciente, 'paciente', 'Maria Paciente', '11987654321', '123.456.789-00', '1990-05-15', 'Rua das Flores, 100', 'São Paulo', 'SP'),
-('gerente@clinica.com', @senha_gerente, 'gerente', 'João Gerente', NULL, NULL, NULL, NULL, NULL, NULL),
-('atendente@clinica.com', @senha_atendente, 'atendente', 'Ana Atendente', NULL, NULL, NULL, NULL, NULL, NULL);
+('paciente@clinica.com', '$2y$10$u8kK2FZzYxZxZJZzYxZxZ.3ZxZxZJZzYxZxZJZzYxZxZJZzYxZxZ', 'paciente', 'Maria Paciente', '11987654321', '123.456.789-00', '1990-05-15', 'Rua das Flores, 100', 'São Paulo', 'SP'),
+('gerente@clinica.com', '$2y$10$e9mL3GYyWwWwWWwWwWwWw.4WwWwWWwWwWwWwWWwWwWwWwWWwWwWw', 'gerente', 'João Gerente', NULL, NULL, NULL, NULL, NULL, NULL),
+('atendente@clinica.com', '$2y$10$h7nN4HXxVvVvVVvVvVvVv.5VvVvVVvVvVvVvVVvVvVvVvVVvVvVv', 'atendente', 'Ana Atendente', NULL, NULL, NULL, NULL, NULL, NULL);
+
