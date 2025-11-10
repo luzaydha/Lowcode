@@ -1,5 +1,5 @@
 <?php
-session_start(); // Inicia a sessão
+session_start(); 
 
 // 1. PREPARA A MENSAGEM DE ERRO (se ela existir)
 $error_message = null; // Começa vazia
@@ -17,5 +17,5 @@ if (isset($_SESSION['success'])) {
 
 // 3. CHAMA O ARQUIVO DE VISUALIZAÇÃO (O "Rosto")
 // O "Cérebro" manda o "Rosto" aparecer e entrega as mensagens para ele.
-require 'longui_atendete_gerente.html';
+require 'logui_atendente_gerente.php';
 

@@ -1,8 +1,8 @@
 <?php
-// db.php
+
 $host = 'localhost';
 $user = 'root';
-$pass = ''; // senha do MySQL (por padrão no XAMPP é vazia)
+$pass = ''; 
 $dbname = 'clinica';
 $port = 3306; // sua porta do MySQL
 

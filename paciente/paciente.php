@@ -1,3 +1,23 @@
+<?php
+session_start();
+$login_page = '/Lowcode-1/longui_paciente.html';
+if (!isset($_SESSION['user_id'])) {
+   
+    header('Location: ' . $login_page);
+    exit;
+}
+
+// 4. (Opcional) Verifica se o 'role' é de paciente
+// Se um atendente tentar acessar a página do paciente, ele é expulso.
+if ($_SESSION['user_role'] !== 'paciente') {
+    // Você pode criar uma página "acesso_negado.html" ou apenas deslogá-lo
+    session_destroy(); // Destrói a sessão por segurança
+    header('Location: ' . $login_page);
+    exit;
+}
+?>
+<!DOCTYPE html>
+<html lang="pt-BR">
 <!DOCTYPE html>
 <html lang="pt-BR">
   <head>
@@ -47,30 +67,31 @@
           src="https://placehold.co/100x100/E2E8F0/4A5568?text=AS"
           alt="Foto do Paciente"
         />
-        <h1 class="text-xl font-bold text-gray-800 mt-4">Ana Silva</h1>
-        <p class="text-sm text-gray-600">ID do Paciente: 789123</p>
-        <div class="mt-6 text-left w-full">
-          <h2 class="text-md font-semibold text-gray-700 border-b pb-2">
-            Informações de Contato
-          </h2>
-          <div class="text-sm text-gray-600 mt-3 space-y-2">
-            <p class="flex items-center">
-              <i data-lucide="mail" class="w-4 h-4 mr-2 text-sky-500"></i>
-              a.silva@email.com
-            </p>
-            <p class="flex items-center">
-              <i data-lucide="phone" class="w-4 h-4 mr-2 text-sky-500"></i> (11)
-              98765-4321
-            </p>
+       <h1 class="text-xl font-bold text-gray-800 mt-4">
+          <?php echo htmlspecialchars($_SESSION['user_nome']); ?>
+        </h1>
+                <p class="text-sm text-gray-600">
+          ID do Paciente: <?php echo htmlspecialchars($_SESSION['user_id']); ?>
+        </p>
+        <div class="mt-6 text-left w-full">
+          <h2 class="text-md font-semibold text-gray-700 border-b pb-2">
+            Informações de Contato
+          </h2>
+          <div class="text-sm text-gray-600 mt-3 space-y-2">
+            <p class="flex items-center">
+              <i data-lucide="mail" class="w-4 h-4 mr-2 text-sky-500"></i>
+                            a.silva@email.com 
+            </p>
           </div>
         </div>
         <div class="mt-auto pt-6">
-          <button
-            class="w-full bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-colors flex items-center justify-center"
-          >
-            <i data-lucide="log-out" class="w-4 h-4 mr-2"></i>
-            Sair
-          </button>
+          <a
+            href="/Lowcode-1/logout.php" 
+            class="w-full bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-colors flex items-center justify-center"
+          >
+            <i data-lucide="log-out" class="w-4 h-4 mr-2"></i>
+            Sair
+        </a>
         </div>
       </div>
 

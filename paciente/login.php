@@ -3,8 +3,12 @@
 session_start();
 require_once 'db.php';
 
+// Caminho absoluto para a tela de login principal
+$login_page = '/Lowcode-1/logui_atendente_gerente.html';
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: login_atendente_gerente.html');
+    // CORRIGIDO: Redireciona para o caminho absoluto
+    header('Location: ' . $login_page);
     exit;
 }
 
@@ -13,7 +17,8 @@ $senha = isset($_POST['senha']) ? trim($_POST['senha']) : '';
 
 if (empty($email) || empty($senha)) {
     $_SESSION['error'] = 'Preencha email e senha.';
-    header('Location: login_atendente_gerente.html');
+    // CORRIGIDO: Redireciona para o caminho absoluto
+    header('Location: ' . $login_page);
     exit;
 }
 
@@ -34,20 +39,30 @@ if ($result && $row = $result->fetch_assoc()) {
         $_SESSION['user_nome'] = $row['nome'];
         $_SESSION['user_role'] = $row['role'];
 
-        // redireciona conforme role
+        // === CORREÇÃO PRINCIPAL AQUI ===
+        // Redireciona usando caminhos absolutos
+        
         if ($row['role'] === 'paciente') {
-            header('Location: paciente.html');
+            // CORRIGIDO: Aponta para o arquivo na RAIZ
+            header('Location: /Lowcode-1/paciente.html');
+            
         } elseif ($row['role'] === 'atendente') {
-            header('Location: atendente.html');
+            // CORRIGIDO: Caminho absoluto
+            header('Location: /Lowcode-1/atendente.html');
+            
         } elseif ($row['role'] === 'gerente') {
-            header('Location: gerente.html');
+            // CORRIGIDO: Caminho absoluto
+            header('Location: /Lowcode-1/gerente.html');
+            
         } else {
-            header('Location: longui_atendente_gerente.html');
+            // CORRIGIDO: Caminho absoluto para a página de login
+            header('Location: ' . $login_page);
         }
         exit;
     }
 }
 
+// CORRIGIDO: Caminho absoluto para a página de login
 $_SESSION['error'] = 'Email ou senha inválidos.';
-header('Location: longui_atendente_gerente.html');
+header('Location: ' . $login_page);
 exit;

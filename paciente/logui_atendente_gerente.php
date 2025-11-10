@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login - MediConnectPro Paciente</title>
+  <title>Login - Clínica MediConnectPro</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
@@ -21,9 +21,11 @@
 <body class="flex items-center justify-center min-h-screen p-4">
   <div class="bg-white rounded-3xl shadow-xl max-w-lg w-full p-8 sm:p-12 text-center">
     <h1 class="text-4xl font-bold mb-2 gradient-text">Acesso ao MediConnect Pro</h1>
+    
     <p id="form-subtitle" class="text-lg text-gray-500 mb-8">Faça login na sua conta</p>
 
-    <form id="loginForm" action="paciente.php" method="POST" class="space-y-6">
+   
+    <form action="paciente/login.php" method="POST" class="space-y-6">
       <input
         type="email"
         name="email"
@@ -42,16 +44,7 @@
         Entrar
       </button>
     </form>
-
-    <div class="mt-8 text-center">
-      <p class="text-base text-gray-500">
-        Não tem uma conta?
-        <a href="cadastro.html" class="font-semibold text-blue-500 hover:text-blue-600 transition-colors">
-          Cadastre-se
-        </a>
-      </p>
-    </div>
-
+    
   </div>
 </body>
 </html>
