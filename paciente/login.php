@@ -39,10 +39,10 @@ if ($result && $row = $result->fetch_assoc()) {
                 header('Location: /Lowcode-1/paciente/paciente.php');
                 break;
             case 'atendente':
-                header('Location: /Lowcode-1/atendente.html');
+                header('Location: atendente.html');
                 break;
             case 'gerente':
-                header('Location: /Lowcode-1/gerente.html');
+                header('Location: gerente.html');
                 break;
             default:
                 $_SESSION['error'] = 'Função de usuário desconhecida.';
